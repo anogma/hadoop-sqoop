@@ -17,11 +17,11 @@ RUN wget "http://ftp.unicamp.br/pub/apache/sqoop/1.99.7/sqoop-1.99.7-bin-hadoop2
     && mv sqoop-1.99.7-bin-hadoop200 sqoop \
     && rm sqoop.tar.gz
 
-RUN wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.12.tar.gz -O /usr/lib/mysql.tar.gz -q \
+RUN wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.47.tar.gz -O /usr/lib/mysql.tar.gz -q \
     && cd /usr/lib/ \
     && tar xvf mysql.tar.gz \
     && mkdir /usr/lib/sqoop/extra \
-    && cp mysql-connector-java-8.0.12/mysql-connector-java-8.0.12.jar /usr/lib/sqoop/extra/ \
+    && cp mysql-connector-java-5.1.47/mysql-connector-java-5.1.47.jar /usr/lib/sqoop/server/lib \
     && rm mysql.tar.gz
 
 COPY assets/core-site.xml.template $HADOOP_PREFIX/etc/hadoop/core-site.xml.template
@@ -29,8 +29,7 @@ COPY assets/core-site.xml.template $HADOOP_PREFIX/etc/hadoop/core-site.xml.templ
 RUN echo "allowed.system.users=sqoop2" >> /usr/local/hadoop/etc/hadoop/container-executor.cfg \
     && sed -i '/^org.apache.sqoop.submission.engine.mapreduce.configuration.directory=/ s:.*:org.apache.sqoop.submission.engine.mapreduce.configuration.directory=/usr/local/hadoop/etc/hadoop/:' /usr/lib/sqoop/conf/sqoop.properties
 
-ENV PATH=$PATH:/usr/lib/sqoop/bin \
-    SQOOP_SERVER_EXTRA_LIB=/usr/lib/sqoop/extra/ \
+ENV SQOOP_SERVER_EXTRA_LIB=/usr/lib/sqoop/extra/ \
     HADOOP_COMMON_HOME=/usr/local/hadoop/share/hadoop/common/ \
     HADOOP_HDFS_HOME=/usr/local/hadoop/share/hadoop/hdfs/ \
     HADOOP_MAPRED_HOME=/usr/local/hadoop/share/hadoop/mapreduce/ \
