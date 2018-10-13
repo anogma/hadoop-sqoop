@@ -29,7 +29,7 @@ COPY assets/core-site.xml.template $HADOOP_PREFIX/etc/hadoop/core-site.xml.templ
 RUN echo "allowed.system.users=sqoop2" >> /usr/local/hadoop/etc/hadoop/container-executor.cfg \
     && sed -i '/^org.apache.sqoop.submission.engine.mapreduce.configuration.directory=/ s:.*:org.apache.sqoop.submission.engine.mapreduce.configuration.directory=/usr/local/hadoop/etc/hadoop/:' /usr/lib/sqoop/conf/sqoop.properties
 
-ENV SQOOP_SERVER_EXTRA_LIB=/usr/lib/sqoop/extra/ \
+ENV PATH=$PATH:/usr/lib/sqoop/bin \
     HADOOP_COMMON_HOME=/usr/local/hadoop/share/hadoop/common/ \
     HADOOP_HDFS_HOME=/usr/local/hadoop/share/hadoop/hdfs/ \
     HADOOP_MAPRED_HOME=/usr/local/hadoop/share/hadoop/mapreduce/ \
