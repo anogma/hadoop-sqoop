@@ -1,17 +1,7 @@
-FROM sequenceiq/hadoop-docker:2.7.1 
-
-RUN yum -y --enablerepo=extras install epel-release && \
-    yum -y clean all && \
-    yum -y install python-pip wget nano vim && \
-    yum -y clean all
-
-RUN pip install google-api-python-client==1.6.4 && \
-    pip install mrjob==0.5.11
-
-COPY assets/.bashrc /root/
+FROM anogma/hadoop:2.7.1 
 
 #sqoop
-RUN wget "http://ftp.unicamp.br/pub/apache/sqoop/1.99.7/sqoop-1.99.7-bin-hadoop200.tar.gz" -O /usr/lib/sqoop.tar.gz \
+RUN wget "http://ftp.unicamp.br/pub/apache/sqoop/1.99.7/sqoop-1.99.7-bin-hadoop200.tar.gz" -O /usr/lib/sqoop.tar.gz -q \
     && cd /usr/lib/ \
     && tar xvf sqoop.tar.gz \
     && mv sqoop-1.99.7-bin-hadoop200 sqoop \
